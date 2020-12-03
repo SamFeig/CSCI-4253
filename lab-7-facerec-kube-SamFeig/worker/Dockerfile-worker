@@ -1,0 +1,14 @@
+##
+## You provide this
+##
+
+FROM dirkcgrunwald/facerec:latest
+
+ADD worker-server.py /
+
+RUN pip3 install --upgrade pika redis jsonpickle requests flask
+
+COPY . /root/face_recognition
+
+CMD cd /root/face_recognition && \
+    python3 worker-server.py

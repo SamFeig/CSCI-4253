@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#
+# Try to find the streaming JAR
+#
+
+
+PLACES="/usr/lib/hadoop-mapreduce/hadoop-streaming.jar"
+PLACES="$PLACES  /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.9.2.jar"
+export HADOOP_V=3.2.1
+PLACES="$PLACES /usr/local/hadoop-$HADOOP_V/share/hadoop/tools/lib/hadoop-streaming-$HADOOP_V.jar"
+STREAM=""
+
+for place in $PLACES; do
+    if [ -f $place ]
+    then
+	STREAM="$place"
+    fi
+done
+
+if [ -z "$STREAM" ]
+then
+    echo "Unable to find your streaming JAR"
+    exit 1
+fi
+   
+hadoop jar $STREAM $*
+
+	
